@@ -40,6 +40,7 @@
                                 <p class="mb-0">
                                     {{i.content}}
                                 </p>
+                                <img style="width: 300px; height: auto;" src="{{ i.user1.image.url }}" alt="img">
                             </div>
                             </div>
                         </li>
@@ -50,7 +51,7 @@
                               {% csrf_token %}
                               <textarea name="content" cols="40" rows="10" id="id_content" class="form-control" placeholder="Address" style="height: 100px;"></textarea>
                               <input type="file" name="image" accept="image/*" id="id_image">
-                              <label for="id_content">Address</label>
+                              <label for="id_content">Chat</label>
                               <button type="submit" class="btn btn-info btn-rounded float-end">Send</button>
                             </form>
                         </li>
