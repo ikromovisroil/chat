@@ -98,13 +98,22 @@ def register(request):
         form = Userregisterform(data=request.POST)
         if form.is_valid():
             form.save()
-            return redirect(reverse('login'))
+            return redirect(reverse('register2'))
     else:
         form = Userregisterform()
     context = { 'form': form }
     return render(request, 'registration/register.html', context)
 
-
+def register2(request):
+    if request.method == 'POST':
+        form = Userregisterform(data=request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect(reverse('login'))
+    else:
+        form = Userregisterform()
+    context = { 'form': form }
+    return render(request, 'registration/register2.html', context)
 
 def logout(request):
     auth.logout(request)
