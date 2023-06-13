@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.shortcuts import render,redirect,HttpResponseRedirect
+from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 from django.contrib import auth
 from django.db.models import Q
@@ -7,6 +8,8 @@ from .models import *
 from .forms import *
 # Create your views here.
 
+
+@login_required
 def main(request):
     role = Role.objects.get(id=2)
     context = {
@@ -17,6 +20,7 @@ def main(request):
     return render(request, 'home/index.html',context)
 
 
+@login_required
 def main2(request):
     usergorup = UserGroup.objects.get(user=request.user)
     role = Role.objects.get(id=1)
@@ -27,6 +31,7 @@ def main2(request):
     return render(request, 'index2.html',context)
 
 
+@login_required
 def chat(request,id):
     Student = User.objects.get(id=id)
     chats = Chat.objects.all()
@@ -49,6 +54,7 @@ def chat(request,id):
     return render(request, 'home/chat.html',context)
 
 
+@login_required
 def chat2(request,id):
     Teacher = User.objects.get(id=id)
     chats = Chat.objects.all()
@@ -110,6 +116,8 @@ def register(request):
     context = { 'form': form }
     return render(request, 'registration/register.html', context)
 
+
+@login_required
 def register2(request):
     if request.method == 'POST':
         form = UserGroupform(data=request.POST)
@@ -138,6 +146,7 @@ def logout(request):
     return redirect(reverse('login'))
 
 
+@login_required
 def profil(request):
     if request.method == 'POST':
         form = Userprofilform(data=request.POST,files=request.FILES,instance=request.user)
