@@ -134,6 +134,15 @@
   <!-- Template Main JS File -->
   <script src="{% static 'assets/js/main.js' %}"></script>
 
+  <script>
+    function reload() {
+      window.scrollTo(0, document.body.scrollHeight);
+      console.log('scrollTo');
+    }
+    setInterval(reload, 5000);
+    reload()
+  </script>
+
     {% block script %} 
     
     {% endblock %}
