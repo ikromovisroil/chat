@@ -63,21 +63,21 @@
                     <h5 class="card-title text-center pb-0 fs-4">Add Group</h5>
                   </div>
 
-                  <form class="row g-3 needs-validation" novalidate>
-
-                    <button id="addButton" type="button" class="btn btn-outline-primary">Add</button>
-                    <button id="subtractButton" type="button" class="btn btn-outline-secondary">Remove</button>
-
+                  <form method="POST" class="row g-3 needs-validation">
+                    {% csrf_token %}
                     <div class="col-12 mt-1">
-                      <label for="yourRole" class="form-label">Group:</label>
-                      <select id="inputState" id="yourRole" class="form-select" required>
+                      <label for="id_group" class="form-label">Group:</label>
+                      <select name="group" id="id_group" class="form-select" required>
                         <option selected="">Choose...</option>
-                        <option value="Teacher">1-1KIDT-20</option>
-                        <option value="Teacher">1-2KIDT-20</option>
+                        {% for i in group %}
+                          <option value="{{i.id}}">{{i.name}}</option>
+                        {% endfor %}
                       </select>
                       <div class="invalid-feedback">Please, enter your role!</div>
                     </div>
-
+                    <div class="col-12">
+                      <button class="btn btn-primary w-100" type="submit">Create Account</button>
+                    </div>
                   </form>
 
                 </div>
@@ -94,36 +94,7 @@
 
   <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
-  <script>
-    var addButton = document.getElementById('addButton');
-    var subtractButton = document.getElementById('subtractButton');
-    var divContainer = document.querySelector('.col-12');
 
-    addButton.addEventListener('click', function() {
-      var newDiv = document.createElement('div');
-      newDiv.innerHTML = `
-        <div class="col-12 mt-1">
-            <label for="yourRole" class="form-label">Group:</label>
-            <select id="inputState" id="yourRole" class="form-select" required>
-            <option selected="">Choose...</option>
-            <option value="Teacher">1-1KIDT-20</option>
-            <option value="Teacher">1-2KIDT-20</option>
-            </select>
-            <div class="invalid-feedback">Please, enter your role!</div>
-        </div>
-      `;
-      divContainer.appendChild(newDiv);
-    });
-
-    subtractButton.addEventListener('click', function() {
-      var divCount = document.querySelectorAll('.col-12').length;
-      if (divCount > 1) {
-        var lastDiv = divContainer.lastElementChild;
-        divContainer.removeChild(lastDiv);
-      }
-    });
-
-  </script>
 
   <!-- Vendor JS Files -->
 <script src="{% static 'assets/vendor/apexcharts/apexcharts.min.js' %}"></script>

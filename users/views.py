@@ -31,7 +31,7 @@ def chat(request,id):
     Student = User.objects.get(id=id)
     chats = Chat.objects.all()
     if request.method == 'POST':
-        form = Chatform(data=request.POST)
+        form = Chatform(data=request.POST,files=request.FILES)
         if form.is_valid():
             chat = form.save(commit=False)
             chat.user1 = request.user
@@ -53,7 +53,7 @@ def chat2(request,id):
     Teacher = User.objects.get(id=id)
     chats = Chat.objects.all()
     if request.method == 'POST':
-        form = Chatform(data=request.POST)
+        form = Chatform(data=request.POST,files=request.FILES)
         if form.is_valid():
             chat = form.save(commit=False)
             chat.user1 = request.user
@@ -81,9 +81,15 @@ def login(request):
             if user and user.is_active:
                 auth.login(request,user)
                 if user.role == Role.objects.get(id=1):
-                    return redirect(reverse('main'))
+                    if UserGroup.objects.filter(user=user).exists():
+                        return redirect(reverse('main'))
+                    else:
+                        return redirect(reverse('register2'))
                 elif user.role == Role.objects.get(id=2):
-                    return redirect(reverse('main2'))
+                    if UserGroup.objects.filter(user=user).exists():
+                        return redirect(reverse('main2'))
+                    else:
+                        return redirect(reverse('register2'))
                 else:
                     return redirect(reverse('login'))
     else:
@@ -98,7 +104,7 @@ def register(request):
         form = Userregisterform(data=request.POST)
         if form.is_valid():
             form.save()
-            return redirect(reverse('register2'))
+            return redirect(reverse('login'))
     else:
         form = Userregisterform()
     context = { 'form': form }
@@ -106,14 +112,24 @@ def register(request):
 
 def register2(request):
     if request.method == 'POST':
-        form = Userregisterform(data=request.POST)
+        form = UserGroupform(data=request.POST)
         if form.is_valid():
-            form.save()
-            return redirect(reverse('login'))
+            usergroup = form.save(commit=False)
+            usergroup.user = request.user
+            usergroup.role = request.user.role
+            usergroup.save()
+            if request.user.role == Role.objects.get(id=2):
+                return redirect(reverse('main2'))
+            else:
+                return redirect(reverse('main'))
     else:
-        form = Userregisterform()
-    context = { 'form': form }
+        form = UserGroupform()
+    context = {
+        'form': form,
+        'group': Group.objects.all()
+    }
     return render(request, 'registration/register2.html', context)
+
 
 def logout(request):
     auth.logout(request)

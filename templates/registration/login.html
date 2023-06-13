@@ -1,4 +1,5 @@
 <!DOCTYPE html> {% load static %}
+{% load crispy_forms_tags %}
 <html lang="en">
 
 <head>
@@ -59,21 +60,7 @@
 
                         <form method="POST" class="row g-3 needs-validation">
                             {% csrf_token %}
-                            <div class="col-12">
-                                <label for="id_username" class="form-label">Username</label>
-                                <div class="input-group has-validation">
-                                    <span class="input-group-text" id="inputGroupPrepend">@</span>
-                                    <input type="text" name="username" class="form-control" placeholder="login" maxlength="150" required="" id="id_username">
-                                    <div class="invalid-feedback">Please enter your username.</div>
-                                </div>
-                            </div>
-
-                            <div class="col-12">
-                                <label for="id_password" class="form-label">Password</label>
-                                <input type="password" name="password" class="form-control" placeholder="parol" required="" id="id_password">
-                                <div class="invalid-feedback">Please enter your password!</div>
-                            </div>
-            
+                            {{form|crispy}}
                             <div class="col-12">
                                 <button class="btn btn-primary w-100" type="submit">Login</button>
                             </div>

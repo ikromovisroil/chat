@@ -49,11 +49,15 @@
     <div class="d-flex align-items-center justify-content-between">
       {% if user.role.name == 'Teacher' %}
           <a href="{% url 'main' %}" class="logo d-flex align-items-center">
+            <img src="{% static 'assets/img/logo.png' %}" alt="">
+            <span class="d-none d-lg-block">BuxDPI</span>
+          </a>
+      {% else %}
+          <a href="{% url 'main2' %}" class="logo d-flex align-items-center">
+            <img src="{% static 'assets/img/logo.png' %}" alt="">
+            <span class="d-none d-lg-block">BuxDPI</span>
+          </a>
       {% endif %}
-
-        <img src="{% static 'assets/img/logo.png' %}" alt="">
-        <span class="d-none d-lg-block">BuxDPI</span>
-      </a>
     </div><!-- End Logo -->
 
     <div class="search-bar">

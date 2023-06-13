@@ -1,4 +1,5 @@
 <!DOCTYPE html> {% load static %}
+{% load crispy_forms_tags %}
 <html lang="en">
 
 <head>
@@ -28,7 +29,9 @@
 
   <!-- Template Main CSS File -->
   <link href="{% static 'assets/css/style.css' %}" rel="stylesheet">
-
+<style>
+    #hint_id_password1, #hint_id_username, #hint_id_password2 {display:none;}
+</style>
   <!-- =======================================================
   * Template Name: NiceAdmin
   * Updated: Mar 09 2023 with Bootstrap v5.2.3
@@ -65,50 +68,7 @@
 
                   <form method="POST" class="row g-3 needs-validation" >
                     {% csrf_token %}
-                    <div class="col-12">
-                      <label for="id_role" class="form-label">Role:</label>
-
-                      <select name="role" id="id_role" id="yourRole" class="form-select" required>
-                        <option value="" selected="">Choose...</option>
-                        <option value="1">Teacher</option>
-                        <option value="2">Student</option>
-                      </select>                     
-                      <div class="invalid-feedback">Please, enter your role!</div>
-                    </div>
-
-                    <div class="col-12">
-                      <label for="id_first_name" class="form-label">F Name</label>
-                      <input type="text" name="first_name" class="form-control" maxlength="150" required="" id="id_first_name">
-                      <div class="invalid-feedback">Please, enter your F name!</div>
-                    </div>
-
-                    <div class="col-12">
-                      <label for="id_last_name" class="form-label">L Name</label>
-                      <input type="text" name="last_name" class="form-control" maxlength="150" required="" id="id_last_name">
-                      <div class="invalid-feedback">Please, enter your L name!</div>
-                    </div>
-
-                    <div class="col-12">
-                      <label for="id_username" class="form-label">Username</label>
-                      <div class="input-group has-validation">
-                        <span class="input-group-text" id="inputGroupPrepend">@</span>
-                        <input type="text" name="username" class="form-control" maxlength="150" autofocus="" required="" id="id_username">
-                        <div class="invalid-feedback">Please choose a username.</div>
-                      </div>
-                    </div>
-
-                    <div class="col-12">
-                      <label for="id_password1" class="form-label">Password</label>
-                      <input type="password" name="password1" class="form-control" autocomplete="new-password" required="" id="id_password1">
-                      <div class="invalid-feedback">Please enter your password!</div>
-                    </div>
-
-                    <div class="col-12">
-                      <label for="id_password2" class="form-label">Re Password</label>
-                      <input type="password" name="password2" class="form-control" autocomplete="new-password" required="" id="id_password2">
-                      <div class="invalid-feedback">Please enter your password!</div>
-                    </div>
-
+                    {{form|crispy}}
                     <div class="col-12">
                       <button class="btn btn-primary w-100" type="submit">Create Account</button>
                     </div>

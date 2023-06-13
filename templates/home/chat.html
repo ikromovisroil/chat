@@ -22,6 +22,9 @@
                                 <p class="mb-0">
                                 {{i.content}}
                                 </p>
+                                {% if i.image %}
+                                  <img style="width: 300px; height: auto;" src="{{ i.image.url }}" alt="img">
+                                {% endif %}
                             </div>
                             </div>
                             <img src="{{ i.user1.image.url }}"
@@ -40,6 +43,9 @@
                                 <p class="mb-0">
                                     {{i.content}}
                                 </p>
+                                {% if i.image %}
+                                  <img style="width: 300px; height: auto;" src="{{ i.image.url }}" alt="img">
+                                {% endif %}
                             </div>
                             </div>
                         </li>
@@ -49,8 +55,8 @@
                             <form method="POST" enctype="multipart/form-data" class="form-floating">
                               {% csrf_token %}
                               <textarea name="content" cols="40" rows="10" id="id_content" class="form-control" placeholder="Address" style="height: 100px;"></textarea>
-                              <input type="file" name="image" accept="image/*" id="id_image">
-                              <label for="id_content">Address</label>
+                                <input type="file" name="image" accept="image/*" id="id_image">
+                                <label for="id_image">Address</label>
                               <button type="submit" class="btn btn-info btn-rounded float-end">Send</button>
                             </form>
                         </li>
