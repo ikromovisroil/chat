@@ -120,8 +120,10 @@ def register2(request):
             usergroup.save()
             if request.user.role == Role.objects.get(id=2):
                 return redirect(reverse('main2'))
-            else:
+            elif request.user.role == Role.objects.get(id=1):
                 return redirect(reverse('main'))
+            else:
+                return redirect(reverse('login'))
     else:
         form = UserGroupform()
     context = {
