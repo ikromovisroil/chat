@@ -34,7 +34,7 @@ def main2(request):
 @login_required
 def chat(request,id):
     Student = User.objects.get(id=id)
-    chats = Chat.objects.all()
+    print(id,request.user.id)
     if request.method == 'POST':
         form = Chatform(data=request.POST,files=request.FILES)
         if form.is_valid():
@@ -49,7 +49,12 @@ def chat(request,id):
         'form': form,
         'user': User.objects.get(username=request.user),
         'student': Student,
-        'chat': chats,
+        'chat': Chat.objects.raw(f"""
+                 SELECT * 
+                 from users_chat
+                 where (user1_id={request.user.id} or user1_id={id}) and (user2_id={request.user.id} or user2_id={id})
+                 ORDER by data asc
+        """)
     }
     return render(request, 'home/chat.html',context)
 
@@ -72,7 +77,12 @@ def chat2(request,id):
         'form': form,
         'user': User.objects.get(username=request.user),
         'Teacher': 	Teacher,
-        'chat': chats,
+        'chat': Chat.objects.raw(f"""
+                 SELECT * 
+                 from users_chat
+                 where (user1_id={request.user.id} or user1_id={id}) and (user2_id={request.user.id} or user2_id={id})
+                 ORDER by data asc
+        """)
     }
     return render(request, 'chat.html',context)
 
